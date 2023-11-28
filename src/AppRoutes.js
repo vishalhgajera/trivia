@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Trivia from './Components/trivia/Trivia'
+import Trivia from './components/trivia/Trivia'
 
 function AppRoutes() {
   return (
