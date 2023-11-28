@@ -255,7 +255,7 @@ Form
   text-transform: capitalize;
 }
 .submit-btn {
-  width: 100%;
+  /* width: 100%; */
   margin-top: 3rem;
 }
 /*

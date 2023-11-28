@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchQuiz } from "../../store/quizSlice";
 import { useSelector,useDispatch } from "react-redux";
+import Quiz from "../quiz/Quiz";
 
 function Trivia() {
 
   const dispatch = useDispatch();
-  const {quiz,isLoaded,error} = useSelector(state=>state.quiz)
+  const {quiz,isLoaded,error} = useSelector(state=>state.quiz);
+  const [quizCount,setQuizCount] = useState(0);
 
   console.log({quiz,isLoaded,error});
 
@@ -15,32 +17,25 @@ function Trivia() {
     }
   }, [dispatch])
   
+  const nextHandler = (count) => {
+    if(quizCount<9){
+      setQuizCount(count+1)
+    }
+  }
 
   return (
-
     <section className="quiz">
-      <p className="correct-answers">correct answers:0/0</p>
-      <article className="container">
-
-        {isLoaded &&
-          <h2>
-          {quiz.results[0].question}
-          </h2>
-        }
-        {!isLoaded &&
+      {isLoaded &&
+        <React.Fragment>
+          <Quiz data={{quiz,quizCount}}/>
+          <button className="next-question" onClick={e=>nextHandler(quizCount)}>next question</button>
+        </React.Fragment>
+      }
+      {!isLoaded &&
           <h2 >
-          Which one of these superhero teams appears in the Invincible comics?
+            Loading...
           </h2>
-        }
-
-        <div className="btn-container">
-          <button className="answer-btn">Avengers</button>
-          <button className="answer-btn">Justice League</button>
-          <button className="answer-btn">Guardians of the Globe</button>
-          <button className="answer-btn">Teenage Mutant Ninja Turtles</button>
-        </div>
-      </article>
-      <button className="next-question">next question</button>
+      }
     </section>
   );
 }
