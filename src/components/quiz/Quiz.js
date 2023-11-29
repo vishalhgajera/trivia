@@ -1,31 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import parser from "html-react-parser";
 
-function Quiz({data}) {
-    const{quiz,quizCount} = data
-    console.log(quizCount);
-    const question = quiz.results[quizCount].question;
-    const answerArry = [...quiz.results[quizCount].incorrect_answers,quiz.results[quizCount].correct_answer].sort().reverse()
+function Quiz({ data }) {
+  const { quiz, quizCount, nextHandler } = data;
+  const [userAnswer, setUserAnswer] = useState(null);
+  const [value, setValue] = useState(null);
 
-    const submitHandler = () =>{
+  const question = quiz.results[quizCount].question;
+  const shuffledAnswers = [...quiz.results[quizCount].incorrect_answers, quiz.results[quizCount].correct_answer].sort().reverse();
 
-    }
+  useEffect(() => {
+    setUserAnswer(null);
+    setValue(null);
+  }, [quizCount]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const isCorrect = quiz.results[quizCount].correct_answer === value;
+    setUserAnswer(isCorrect);
+  };
+
+  const resetAnswer = () => {
+    setUserAnswer(null);
+    setValue(null);
+  };
+
+  const handleNextQuestion = () => {
+    resetAnswer(); 
+    nextHandler();
+  };
 
   return (
-    <React.Fragment>
-        <p className="correct-answers">correct answers:0/0</p>
-        <article className="container">
-            <h2>
-            {question}
-            </h2>
-            <div className="btn-container">
-                {answerArry.map(answere => (
-                <button key={answere} className="answer-btn">{answere}</button>
-                ))}
+    <form onSubmit={submitHandler}>
+      <p className="correct-answers">Question Count: {quizCount+1}/10</p>
+      <article className="container">
+        <h2>{question}</h2>
+        <div className="btn-container">
+          {shuffledAnswers.map((answer, index) => (
+            <div
+              className={`answer-box ${userAnswer !== null && answer === quiz.results[quizCount].correct_answer ? 'correct' : ''}`}
+              key={answer}
+            >
+              <input
+                type="radio"
+                name={`answer_${quizCount}`}
+                id={`answer_${index}`}
+                onChange={() => setValue(answer)}
+              />
+              <label className="answer-btn" htmlFor={`answer_${index}`}>
+                {parser(answer)}
+              </label>
             </div>
-        </article>
-      <button className="submit-btn" onClick={submitHandler}>Submit Question</button>
-    </React.Fragment>
-  )
+          ))}
+        </div>
+      </article>
+
+      {userAnswer == null && (
+        <div className="button-box">
+            <button type="submit" className={`submit-btn ${userAnswer !== null ? (userAnswer ? 'correct' : 'incorrect') : ''}`}>
+              Submit Question
+            </button>
+        </div>
+      )}
+      {userAnswer !== null && (
+      <div className="button-box">
+            <h4 className={`feedback ${userAnswer ? 'correct' : 'incorrect'}`}>
+              {userAnswer ? 'Correct!' : `Incorrect. The correct answer is: ${quiz.results[quizCount].correct_answer}`}
+            </h4>
+            <button type="button" className="next-question" onClick={handleNextQuestion}>
+              Next Question
+            </button>
+      </div>
+      )}
+
+    </form>
+  );
 }
 
-export default Quiz
+export default Quiz;

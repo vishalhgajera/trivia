@@ -152,7 +152,7 @@ main {
 .App {
   padding: 50px;
 }
-.quiz {
+.quiz , .result{
   max-width: var(--max-width);
   margin: auto;
   background: rgba(255, 255, 255, 0.664);
@@ -169,10 +169,12 @@ main {
   line-height: 1.5;
   text-transform: none;
 }
+.answer-box{
+  margin: 0.75rem auto;
+}
 .answer-btn {
   display: block;
   width: 100%;
-  margin: 0.75rem auto;
   background: #fcb69f;
   border-radius: 1rem;
   border-color: transparent;
@@ -180,14 +182,22 @@ main {
   letter-spacing: var(--spacing);
   font-size: 1rem;
   cursor: pointer;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   transition: var(--transition);
 }
+.answer-box input{
+  display: none;
+}
+.answer-box input:checked+.answer-btn{
+  background: #ffecd2;
+}
+
 @media screen and (min-width: 576px) {
-  .answer-btn {
+  .answer-box {
     max-width: 60%;
   }
 }
+
 .answer-btn:hover {
   background: #ffecd2;
   color: #222;
@@ -208,7 +218,6 @@ main {
   padding: 0.25rem 0.5rem;
   display: block;
   width: 35%;
-  margin-left: auto;
   margin-top: 2rem;
   text-transform: capitalize;
   font-weight: 700;
@@ -223,6 +232,14 @@ main {
   background: #c7917f;
   color: #cfc1ac;
 }
+
+.button-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 /*
 =============== 
 Form
@@ -254,9 +271,15 @@ Form
   color: var(--clr-red-dark);
   text-transform: capitalize;
 }
-.submit-btn {
-  /* width: 100%; */
-  margin-top: 3rem;
+.feedback{
+  margin-top: 2rem;
+}
+
+.feedback.correct{
+  color: green;
+}
+.feedback.incorrect{
+  color: red;
 }
 /*
 =============== 
