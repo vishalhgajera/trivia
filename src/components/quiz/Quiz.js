@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Answer from "./Answer";
-import Button from "./Button";
+import Answer from "../answer/Answer";
+import Button from "../button/Button";
 
 function Quiz({ data }) {
   const { quiz, quizCount, nextHandler , totalQuiz , correct, setCorrect} = data;
