@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const ResultContext = createContext();
+const resultContext = createContext();
 
-export const useResult = () => useContext(ResultContext);
+export const useResult = () => useContext(resultContext);
 
 const ResultProvider = ({ children }) => {
   const totalQuiz = 10;
@@ -13,9 +13,9 @@ const ResultProvider = ({ children }) => {
   }
   
   return (
-    <ResultContext.Provider value={{ totalQuiz, correct, setCorrect:resultHandler }}>
+    <resultContext.Provider value={{ totalQuiz, correct, setCorrect:resultHandler }}>
       {children}
-    </ResultContext.Provider>
+    </resultContext.Provider>
   );
 };
 
