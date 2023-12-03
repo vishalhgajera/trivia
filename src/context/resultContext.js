@@ -6,7 +6,7 @@ export const useResult = () => useContext(ResultContext);
 
 const ResultProvider = ({ children }) => {
   const totalQuiz = 10;
-  const [correct, setCorrect] = useState("");
+  const [correct, setCorrect] = useState(0);
 
   const resultHandler = (count) => {
     setCorrect(count)
