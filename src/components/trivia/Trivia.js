@@ -17,6 +17,11 @@ function Trivia() {
     dispatch(fetchQuiz(totalQuiz));
   }, [dispatch,totalQuiz]);
 
+  useEffect(() => {
+    setIsResultReady(false);
+    setCorrect(0);
+  }, [])
+  
   const nextHandler = () => {
     if (quizCount < totalQuiz - 1) {
       setQuizCount((count) => count + 1);
