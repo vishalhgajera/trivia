@@ -7,13 +7,24 @@ export const useResult = () => useContext(resultContext);
 const ResultProvider = ({ children }) => {
   const totalQuiz = 10;
   const [correct, setCorrect] = useState(0);
+  const [isResultReady, setIsResultReady] = useState(false);
 
   const resultHandler = (count) => {
     setCorrect(count)
   }
+
+  const displayResultHandler = (param) => {
+    setIsResultReady(param)
+  }
   
   return (
-    <resultContext.Provider value={{ totalQuiz, correct, setCorrect:resultHandler }}>
+    <resultContext.Provider value={{ 
+      totalQuiz, 
+      correct, 
+      setCorrect:resultHandler, 
+      isResultReady, 
+      setIsResultReady:displayResultHandler
+      }}>
       {children}
     </resultContext.Provider>
   );

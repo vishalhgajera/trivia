@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useResult } from "../../context/resultContext"; 
+import { useNavigate } from 'react-router-dom';
 function Result() {
 
-  const {totalQuiz, correct} = useResult();
+  const {totalQuiz, correct, isResultReady } = useResult();
+
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(!isResultReady){
+      navigate('/')
+    }
+  }, [isResultReady, navigate])
+  
 
   return (
     <section className="quiz">

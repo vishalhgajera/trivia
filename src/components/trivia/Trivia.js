@@ -8,7 +8,7 @@ import Quiz from "../quiz/Quiz";
 
 function Trivia() {
   const {quiz, isLoaded, error } = useSelector((state) => state.quiz);
-  const { totalQuiz, correct, setCorrect } = useResult();
+  const { totalQuiz, correct, setCorrect,setIsResultReady } = useResult();
   const [quizCount, setQuizCount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ function Trivia() {
       setQuizCount((count) => count + 1);
     }
     else{
+      setIsResultReady(true);
       navigate('/result');
     }
   };
