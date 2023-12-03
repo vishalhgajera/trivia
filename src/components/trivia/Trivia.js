@@ -1,39 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { fetchQuiz } from "../../store/quizSlice";
 import { useSelector, useDispatch } from "react-redux";
-import Quiz from "../quiz/Quiz";
 import { useNavigate } from "react-router-dom";
 
+import { fetchQuiz } from "../../store/quizSlice";
+import { useResult } from "../../context/resultContext";
+import Quiz from "../quiz/Quiz";
+
 function Trivia() {
-  const dispatch = useDispatch();
-  const { quiz, isLoaded, error } = useSelector((state) => state.quiz);
+  const {quiz, isLoaded, error } = useSelector((state) => state.quiz);
+  const { totalQuiz, correct, setCorrect } = useResult();
   const [quizCount, setQuizCount] = useState(0);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchQuiz());
-  }, [dispatch]);
+    dispatch(fetchQuiz(totalQuiz));
+  }, [dispatch,totalQuiz]);
 
   const nextHandler = () => {
-    if (quizCount < 9) {
+    if (quizCount < totalQuiz - 1) {
       setQuizCount((count) => count + 1);
     }
     else{
-      navigate('/result')
+      navigate('/result');
     }
   };
 
   return (
-    <section className="quiz">
+    <React.Fragment>
       {!error && 
         <React.Fragment>
-          {isLoaded &&  <Quiz data={{ quiz, quizCount, nextHandler }} />}
+          {isLoaded &&  
+          <section className="quiz">
+            <Quiz data={{ quiz, quizCount, totalQuiz, nextHandler , correct, setCorrect }} />
+          </section>
+          }
 
-          {!isLoaded && <h2>Loading...</h2>}
+          {!isLoaded && <div className="loading"></div>}
         </React.Fragment>
       }
       {error && <h2>{error}</h2>}
-    </section>
+    </React.Fragment>
   );
 }
 

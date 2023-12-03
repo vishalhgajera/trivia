@@ -4,6 +4,7 @@ import Trivia from './components/trivia/Trivia'
 import Result from './components/result/Result'
 
 function AppRoutes() {
+
   return (
     <BrowserRouter>
         <Routes>

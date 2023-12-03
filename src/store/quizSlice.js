@@ -12,9 +12,9 @@ const retryWithBackoff = async (dispatch, actionCreator) => {
 
 export const fetchQuiz = createAsyncThunk(
   "quiz/fetchQuiz",
-  async (_, thunkApi) => {
+  async (totalQuiz, thunkApi) => {
     try {
-      const url = `?amount=10`;
+      const url = `?amount=${totalQuiz}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

@@ -1,10 +1,13 @@
 import './App.css';
 import AppRoutes from './AppRoutes';
+import ResultProvider from './context/resultContext';
 
 function App() {
   return (
     <div className="App">
-      <AppRoutes/>
+      <ResultProvider>
+        <AppRoutes/>
+      </ResultProvider>
     </div>
   );
 }
